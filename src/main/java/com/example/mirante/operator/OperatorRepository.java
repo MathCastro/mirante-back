@@ -13,7 +13,7 @@ public interface OperatorRepository extends JpaRepository<Operator, Long>  {
     Optional<Operator> findById (Long id);
 
     @Query(value = "SELECT s FROM Operator s WHERE s.name like %?1%",
-            countQuery = "SELECT count(*) FROM ColaboradorModel s WHERE s.name like %?1%",
+            countQuery = "SELECT count(*) FROM Operator s WHERE s.name like %?1%",
             nativeQuery = false)
     Page<Operator> filter(@Param("value") String value, Pageable pageable);
 }
