@@ -72,6 +72,13 @@ public class AuthorizationController {
                     "There is already an user with this username");
         }
 
+        Optional<Role> existingRole = roleRepository.findById(user.getRoles().getId());
+
+        if (!existingRole.isPresent() || existingRole.get().getRole().equals("ROLE_ADMINISTRADOR")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Error creating user");
+        }
+
         return userRepository.save(user);
     }
 }
