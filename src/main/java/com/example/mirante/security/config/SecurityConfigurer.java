@@ -39,9 +39,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/authenticate",
-                "/operator",
                 "/v2/api-docs",
                 "/webjars/**").permitAll()
+                .antMatchers("/operator/**").hasRole("ADMINISTRADOR")
                 .anyRequest().authenticated()
                 .and().cors().and()
                 .sessionManagement()
