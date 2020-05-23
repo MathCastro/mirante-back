@@ -2,11 +2,14 @@ package com.example.mirante.security.controller;
 
 import com.example.mirante.security.model.AuthenticationRequest;
 import com.example.mirante.security.model.AuthenticationResponse;
+import com.example.mirante.security.model.Role;
 import com.example.mirante.security.model.User;
+import com.example.mirante.security.repository.RoleRepository;
 import com.example.mirante.security.repository.UserRepository;
 import com.example.mirante.security.service.JwtService;
 import com.example.mirante.security.service.MiranteUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.Optional;
 
@@ -30,6 +35,9 @@ public class AuthorizationController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private JwtService jwtTokenUtil;
@@ -54,5 +62,16 @@ public class AuthorizationController {
         final String jwt = jwtTokenUtil.generateToken(userDetails, expirationDate);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt, user.get().getOperator(), expirationDate));
+    }
+
+    public User create(@Valid @RequestBody User user) {
+        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+
+        if (existingUser.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "There is already an user with this username");
+        }
+
+        return userRepository.save(user);
     }
 }

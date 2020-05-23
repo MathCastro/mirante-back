@@ -1,5 +1,6 @@
 package com.example.mirante.operator;
 
+import com.example.mirante.security.controller.AuthorizationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -7,8 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.Optional;
 
+@RestController
+@RequestMapping("/operator")
 public class OperatorController {
 
     @Autowired
@@ -17,7 +22,10 @@ public class OperatorController {
     @Autowired
     private OperatorService operatorService;
 
-    @GetMapping("/filter")
+    @Autowired
+    private AuthorizationController authorizationController;
+
+    @GetMapping
     public ResponseEntity<Page<Operator>> filter(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "5") Integer pageSize,
@@ -36,6 +44,16 @@ public class OperatorController {
         }
 
         return ResponseEntity.ok(operator.get());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Operator create(@Valid @RequestBody Operator operator) {
+        authorizationController.create(operator.getUser());
+
+        operator.setCreationDate(new Date());
+
+        return operatorRepository.save(operator);
     }
 
     @DeleteMapping("/{id}")

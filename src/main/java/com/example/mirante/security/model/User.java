@@ -21,7 +21,6 @@ public class User {
     @Column
     private String password;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role roles;
