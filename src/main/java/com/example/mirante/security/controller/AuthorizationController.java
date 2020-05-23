@@ -81,4 +81,19 @@ public class AuthorizationController {
 
         return userRepository.save(user);
     }
+
+    public User updateRole(@Valid @RequestBody User user) {
+        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+
+        Optional<Role> existingRole = roleRepository.findById(user.getRoles().getId());
+
+        if (!existingUser.isPresent() || !existingRole.isPresent() || existingRole.get().getRole().equals("ROLE_ADMINISTRADOR")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Error updating user");
+        }
+
+        user.setPassword(existingUser.get().getPassword());
+
+        return userRepository.save(user);
+    }
 }

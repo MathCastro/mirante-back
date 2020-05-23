@@ -56,6 +56,26 @@ public class OperatorController {
         return operatorRepository.save(operator);
     }
 
+    @PutMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<Operator> update(@Valid @RequestBody Operator operator) {
+        Optional<Operator> oldOperator = operatorRepository.findById(operator.getId());
+
+        if (oldOperator == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if(!operator.getUser().getUsername().equals(oldOperator.get().getUser().getUsername())) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        operator.setCreationDate(oldOperator.get().getCreationDate());
+
+        authorizationController.updateRole(operator.getUser());
+        operatorRepository.save(operator);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Operator> delete(@PathVariable Long id) {
