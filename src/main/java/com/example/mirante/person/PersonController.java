@@ -74,7 +74,7 @@ public class PersonController {
         return personRepository.save(person);
     }
 
-    @PutMapping
+    @PutMapping("/edit")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<Person> update(@Valid @RequestBody Person person) {
         Optional<Person> oldPerson = personRepository.findById(person.getId());
@@ -93,7 +93,7 @@ public class PersonController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Person> delete(@PathVariable Long id) {
         personRepository.deleteById(id);

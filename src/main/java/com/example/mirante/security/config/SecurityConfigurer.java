@@ -45,7 +45,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 "/v2/api-docs",
                 "/webjars/**").permitAll()
                 .antMatchers("/operator/**").hasRole("ADMINISTRADOR")
-                .antMatchers("/person/create/**").hasRole("GERENTE")
+                .antMatchers("/person/create/**",
+                        "/person/edit/**",
+                        "/person/delete/**")
+                .hasRole("GERENTE")
+                .antMatchers("/person/**").hasAnyRole("GERENTE", "ANALISTA")
                 .anyRequest().authenticated()
                 .and().cors().and()
                 .sessionManagement()
