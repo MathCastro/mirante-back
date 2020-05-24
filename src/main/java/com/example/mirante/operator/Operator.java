@@ -21,7 +21,7 @@ public class Operator {
     @Column
     private Date creationDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user")
     private User user;
 
