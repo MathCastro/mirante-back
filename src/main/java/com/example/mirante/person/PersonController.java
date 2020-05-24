@@ -53,7 +53,7 @@ public class PersonController {
         return ResponseEntity.ok(person.get());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Person create(@Valid @RequestBody Person person, Authentication authentication) {
         Optional<User> user = userRepository.findByUsername(authentication.getName());
