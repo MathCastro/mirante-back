@@ -38,6 +38,7 @@ CREATE TABLE TB_PERSON(
 CREATE TABLE TB_PHONE(
     id serial PRIMARY KEY,
     ddd VARCHAR(3) NOT NULL,
+    number VARCHAR(50) NOT NULL,
     type INTEGER,
     creation_date DATE NOT NULL,
     id_operator INTEGER NOT NULL,

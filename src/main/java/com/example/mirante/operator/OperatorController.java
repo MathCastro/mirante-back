@@ -1,5 +1,6 @@
 package com.example.mirante.operator;
 
+import com.example.mirante.person.Person;
 import com.example.mirante.security.controller.AuthorizationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,8 +52,6 @@ public class OperatorController {
     public Operator create(@Valid @RequestBody Operator operator) {
         authorizationController.create(operator.getUser());
 
-        operator.setCreationDate(new Date());
-
         return operatorRepository.save(operator);
     }
 
@@ -79,6 +78,16 @@ public class OperatorController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Operator> delete(@PathVariable Long id) {
+        Optional<Operator> operator = operatorRepository.findById(id);
+
+        if (operator == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (operator.get().getUser().getRoles().getRole().equals("ROLE_ADMINISTRADOR")) {
+            return ResponseEntity.badRequest().build();
+        }
+
         operatorRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

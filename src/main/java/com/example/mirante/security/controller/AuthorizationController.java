@@ -92,8 +92,6 @@ public class AuthorizationController {
                     "Error updating user");
         }
 
-        user.setPassword(existingUser.get().getPassword());
-
         return userRepository.save(user);
     }
 }

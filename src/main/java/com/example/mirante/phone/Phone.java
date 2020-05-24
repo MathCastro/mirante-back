@@ -1,29 +1,34 @@
-package com.example.mirante.operator;
+package com.example.mirante.phone;
 
-import com.example.mirante.security.model.User;
+import com.example.mirante.operator.Operator;
+import com.example.mirante.person.Person;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "tb_operator")
+@Table(name = "tb_phone")
 @JsonIgnoreProperties(value = { "creationDate" }, allowGetters = true)
-public class Operator {
+public class Phone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column
-    private String name;
+    private String ddd;
+
+    @Column
+    private String number;
 
     @Column
     private Date creationDate;
 
-    @OneToOne
-    @JoinColumn(name = "id_user")
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "id_operator")
+    private Operator operator;
 
     @PrePersist
     protected void onCreate() {
@@ -38,12 +43,20 @@ public class Operator {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDdd() {
+        return ddd;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDdd(String ddd) {
+        this.ddd = ddd;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public Date getCreationDate() {
@@ -54,11 +67,11 @@ public class Operator {
         this.creationDate = creationDate;
     }
 
-    public User getUser() {
-        return user;
+    public Operator getOperator() {
+        return operator;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOperator(Operator operator) {
+        this.operator = operator;
     }
 }
