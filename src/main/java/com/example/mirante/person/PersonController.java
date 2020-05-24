@@ -71,8 +71,8 @@ public class PersonController {
         for (Phone phone:
              person.getPhones()) {
             phone.setOperator(user.get().getOperator());
-
         }
+
         person.setOperator(user.get().getOperator());
         person.setPhones(phoneController.createAll(person.getPhones()));
 
@@ -81,9 +81,21 @@ public class PersonController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Operator> update(@Valid @RequestBody Operator operator) {
+    public ResponseEntity<Person> update(@Valid @RequestBody Person person) {
+        Optional<Person> oldPerson = personRepository.findById(person.getId());
 
-        return ResponseEntity.ok().build();
+        if (oldPerson == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            for (Phone phone:
+                    person.getPhones()) {
+                phone.setOperator(oldPerson.get().getOperator());
+            }
+            person.setPhones(phoneController.createAll(person.getPhones()));
+            person.setOperator(oldPerson.get().getOperator());
+            personRepository.save(person);
+            return ResponseEntity.ok().build();
+        }
     }
 
     @DeleteMapping("/{id}")

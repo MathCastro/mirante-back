@@ -35,6 +35,11 @@ public class Phone {
         creationDate = new Date();
     }
 
+    @PreUpdate
+    protected void onUpdate() {
+        creationDate = new Date();
+    }
+
     public Long getId() {
         return id;
     }
