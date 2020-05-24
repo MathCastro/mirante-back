@@ -1,7 +1,5 @@
 package com.example.mirante.person;
 
-import com.example.mirante.operator.Operator;
-import com.example.mirante.operator.OperatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

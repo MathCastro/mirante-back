@@ -1,11 +1,7 @@
 package com.example.mirante.person;
 
-import com.example.mirante.operator.Operator;
-import com.example.mirante.operator.OperatorRepository;
-import com.example.mirante.operator.OperatorService;
 import com.example.mirante.phone.Phone;
 import com.example.mirante.phone.PhoneController;
-import com.example.mirante.security.controller.AuthorizationController;
 import com.example.mirante.security.model.User;
 import com.example.mirante.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.Optional;
 
 @RestController

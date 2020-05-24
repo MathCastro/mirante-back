@@ -1,6 +1,5 @@
 package com.example.mirante.person;
 
-import com.example.mirante.operator.Operator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

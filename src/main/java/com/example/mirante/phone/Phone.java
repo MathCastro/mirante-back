@@ -1,8 +1,6 @@
 package com.example.mirante.phone;
 
 import com.example.mirante.operator.Operator;
-import com.example.mirante.person.Person;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;

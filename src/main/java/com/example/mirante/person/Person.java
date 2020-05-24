@@ -3,13 +3,11 @@ package com.example.mirante.person;
 import com.example.mirante.operator.Operator;
 import com.example.mirante.phone.Phone;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "tb_person")
