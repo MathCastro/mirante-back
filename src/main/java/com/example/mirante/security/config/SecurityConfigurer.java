@@ -47,7 +47,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/operator/**").hasRole("ADMINISTRADOR")
                 .antMatchers("/person/create/**",
                         "/person/edit/**",
-                        "/person/delete/**")
+                        "/person/delete/**",
+                        "/phone/**")
                 .hasRole("GERENTE")
                 .antMatchers("/person/**").hasAnyRole("GERENTE", "ANALISTA")
                 .anyRequest().authenticated()
